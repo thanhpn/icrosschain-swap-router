@@ -29,14 +29,7 @@ import {
 
 dotenv.config();
 
-export const getPayer = (file: String) => {
-  const rawdata = fs.readFileSync(
-    // replace with your key
-    path.resolve("/Users/thanhpn/.config/solana/" + file + ".json")
-  );
-  const keyData = JSON.parse(rawdata.toString());
-  return web3.Keypair.fromSecretKey(new Uint8Array(keyData));
-};
+require('dotenv').config();
 
 export const getTester = (file: String) => {
   const rawdata = fs.readFileSync(
@@ -101,9 +94,6 @@ describe("icrosschainSwapSolana", () => {
 
   const provider = anchor.Provider.env();
   anchor.setProvider(provider);
-  // console.log(provider)
-  const wallet = getPayer("id");
-
   const payer = getTester("payer");
   const testUser = getTester("tester1");
   const treasuryWallet = getTester("tester2");
@@ -139,7 +129,7 @@ describe("icrosschainSwapSolana", () => {
     console.log(`bump: ${bump}, pubkey: ${pda.toBase58()}`);
   });
 
-  it("make swap only solana !", async () => {
+  it("Make swap only solana", async () => {
     let pda_amount_token_before = parseInt(
       (await provider.connection.getTokenAccountBalance(user_ata_ray)).value
         .amount
@@ -167,6 +157,7 @@ describe("icrosschainSwapSolana", () => {
     let tx = await program.rpc.swapSolana(
       new anchor.BN(100000),
       new anchor.BN(100),
+      new anchor.BN(4),
       {
         accounts: {
           poolProgramId: new PublicKey(POOL_PROGRAM_ID), //raydium program
@@ -174,7 +165,7 @@ describe("icrosschainSwapSolana", () => {
           ammId: new PublicKey(AMM_ID), //2
           ammAuthority: new PublicKey(AMM_AUTHORITY), //3
           ammOpenOrders: new PublicKey(AMM_OPEN_ORDERS), //4
-          ammTargetOrders: new PublicKey(AMM_TARGET_ORDERS), //5
+          atoOrMda: new PublicKey(AMM_TARGET_ORDERS), //5
           poolCoinTokenAccount: new PublicKey(POOL_COIN_TOKEN_ACCOUNT), //6 ray
           poolPcTokenAccount: new PublicKey(POOL_PC_TOKEN_ACCOUNT), //7 usdc
           serumProgramId: new PublicKey(SERUM_PROGRAM_ID), //8 Serum DEX V3
@@ -188,7 +179,7 @@ describe("icrosschainSwapSolana", () => {
           serumVaultSigner: new PublicKey(SERUM_VAULT_SIGNER),
 
           uerSourceTokenAccount: user_ata_ray, //Ray ata source
-          uerDestinationTokenAccount: user_ata_usdc, //usec ata destination
+          uerDestinationTokenAccount: user_ata_usdc, //usdc ata destination
           userSourceOwner: payer.publicKey,
           treasureAta: treasure_ata_ray,
           tokenMint: ray_mint_address,
