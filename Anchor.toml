@@ -1,0 +1,15 @@
+[features]
+seeds = false
+[programs.localnet]
+icrosschain_swap_solana = "8AjFdB883udAJC1883po4KpgkSzyrWtL6KaTRCkzAiX9"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "devnet"
+#cluster = "mainnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

@@ -1,0 +1,11 @@
+
+.anchor
+.DS_Store
+target/debug
+target/deploy
+target/release
+target/types
+target/bpfel-unknown-unknown
+bpfel-unknown-unknown
+**/*.rs.bk
+node_modules
