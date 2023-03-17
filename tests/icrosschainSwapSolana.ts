@@ -188,21 +188,18 @@ describe("icrosschainSwapSolana", () => {
         signers: [payer],
       }
     );
-    let pda_amount_token = parseInt(
+    console.log("user's ray amount token after swap: ", parseInt(
       (await provider.connection.getTokenAccountBalance(user_ata_ray)).value
         .amount
-    );
-    console.log("user's ray amount token after swap: ", pda_amount_token);
-    let receive_amount_token = parseInt(
+    ));
+    console.log("user's usdc amount token after swap: ", parseInt(
       (await provider.connection.getTokenAccountBalance(user_ata_usdc)).value
         .amount
-    );
-    console.log("user's usdc amount token after swap: ", receive_amount_token);
-    let treasure_ray_after = parseInt(
+    ));
+    console.log("treasure's ray amount token after swap: ", parseInt(
       (await provider.connection.getTokenAccountBalance(treasure_ata_ray)).value
         .amount
-    );
-    console.log("treasure's ray amount token after swap: ", treasure_ray_after);
+    ));
     console.log("swap solana tx: ", tx);
   });
 
